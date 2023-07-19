@@ -8,7 +8,7 @@ def progress(step: int, steps: int, errors: list = [], delta: int = 0):
     Args:
         step (int): Current iteration.
         steps (int): Max number of iterations.
-        errors (list, optional): List of errors to count and print out (NYI) in the end. Defaults to [].
+        errors (list, optional): List of errors to count and print out in the end. Defaults to [].
         delta (int, optional): Timed average of iteration. Defaults to 0.
     """
     if step > steps or steps <= 0:
@@ -29,4 +29,5 @@ def progress(step: int, steps: int, errors: list = [], delta: int = 0):
             print(f"[{'█' * percent}{'-' * (LENGTH-percent)}] {int(round(step/steps, 2)*100)}% ({step}/{steps}){eta} [Err: {len(errors)}, {round(len(errors)/steps, 2)*100}%]", end='\r')
             return
         print(f"[{'█' * percent}{'-' * (LENGTH-percent)}] {int(round(step/steps, 2)*100)}% ({step}/{steps}){eta} [Err: {len(errors)}, {round(len(errors)/steps, 2)*100}%]")
+        print(f'The list of iterations you might want to investigate or retry: {", ".join(errors)}')
         return

@@ -8,7 +8,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from progress import Progress
+# LOCAL IMPORTS
+from progress_bar import Progress
 
 class Crawler():
     def __init__(self) -> None:
@@ -112,7 +113,8 @@ class Crawler():
                     try:
                         self.wait.until(EC.presence_of_element_located((By.TAG_NAME, 'a')))
                         temp = self.sweep(link, list(set([link.get_attribute('href') for link in self.browser.find_elements(By.TAG_NAME, 'a')])))
-                        inner_links.extend(temp)
+                        if dept != self.max_dept:
+                            inner_links.extend(temp)
                     except:
                         logging.exception(f"Can't find any links on {link} website.")
                 except:
@@ -132,7 +134,7 @@ class Crawler():
         output = []
         for link in links:
             try:
-                if link.find(self.domain)>=0 and not link.find('?format=')>=0:
+                if link.find(self.domain)>=0 and not link.find('?format=')>=0 and link.find('/#')>=0:
                     output.append(link)
                 elif self.search(link):
                     self.matches.append(link)
